@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Game</title>
+<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	function move(h, w, u) {
+		$('#pooh').animate({
+			height: h,
+			width: w
+		}, 200, function() {
+			$('#pooh').css({
+				'background': u,
+				'background-size': '100% 100%'
+			});
+		})
+	}
+	
+	var down = function(e){
+		$('html').off('keydown', down);
+		if (e.keyCode == 37) {
+			move('200px', '150px', 'url("assets/images/pooh1.png") no-repeat center center');
+		} 
+		if (e.keyCode == 40) {
+			move('150px', '150px', 'url("assets/images/pooh2.gif") no-repeat center center');
+		}
+		if (e.keyCode == 39) {
+			move('80px', '250px', 'url("assets/images/pooh3.png") no-repeat center center');
+		}
+	}
+	
+	$('html').on('keydown', down);
+	
+	$('html').on('keyup', function(e){
+		$('html').on('keydown', down);
+		
+		if (e.keyCode == 37) {
+			move('250px', '150px', 'url("assets/images/pooh1.png") no-repeat center center');
+		} 
+		if (e.keyCode == 40) {
+			move('250px', '150px', 'url("assets/images/pooh1.png") no-repeat center center');
+		}
+		if (e.keyCode == 39) {
+			move('250px', '150px', 'url("assets/images/pooh1.png") no-repeat center center');
+		}
+	})
+	
+	var start = ['260px', '200px', '110px'];
+	var power = parseInt($('#power').text());
+	var bees = parseInt($('#bees').text());
+	var minus = false;
+	
+	function flyBee() {
+		var i = Math.floor(Math.random() * 3);
+		if (bees > 0 && power > 0) {
+			$('#bee').css('display', 'block');
+			$('#bee').animate({
+				'left': '0px'
+			}, 4000, function() {
+				$('#bee').css({
+					'left': '1300px',
+					'bottom': start[i],
+					'display': 'none'
+				})
+				bees -= 1;
+				$('#bees').text(bees);
+				minus = false;
+				flyBee();
+			})
+		}
+	}
+	flyBee();
+		
+	function noHoney() {
+		$('#loose').animate({
+			'opacity': '0'
+		}, 4000, function() {
+			$('#loose').animate({
+				'opacity': '1'
+			}, 4000)
+		})
+	}
+	
+	function loose() {
+		move('250px', '350px', 'url("assets/images/pooh_chased.gif") no-repeat center center');
+		(function running(){
+			$('#pooh').animate({'left': '-400px'}, 3000, function() {
+				$('#pooh').css({'left': '1000px'});
+			})
+			
+		})();
+		$('#loose').css('display', 'block');
+		(function blink() { 
+			  $('#loose').fadeOut(800).fadeIn(800, blink); 
+			})();
+	}
+	var index = 0;
+	function win() {
+		var x = ['350px', '250px', '250px', '150px'];
+		var y = ['150px', '150px', '150px', '300px'];
+		var z = ['url("assets/images/pooh-eat1.gif") no-repeat center center',
+		         'url("assets/images/pooh-eat2.gif") no-repeat center center',
+		         'url("assets/images/pooh-eat3.gif") no-repeat center center',
+		         'url("assets/images/pooh-eat4.gif") no-repeat center center'];
+		move(x[index], y[index], z[index]);
+		(function blink1() { 
+			  $('#pooh').fadeIn(800).fadeOut(800, blink1); 
+			})();
+		index++;
+		if (index == 4) {
+		index = 0;
+		}
+	}
+	
+	function loop(){
+		if ((parseInt($('#bee').css('left')) > 550 && parseInt($('#bee').css('left')) < 600 && 
+			$('#bee').css('bottom') == '260px' && parseInt($('#pooh').css('height')) > 200 && 
+			minus == false && power > 0) ||
+			(parseInt($('#bee').css('left')) > 550 && parseInt($('#bee').css('left')) < 600 && 
+			$('#bee').css('bottom') == '200px' && parseInt($('#pooh').css('height')) > 150 && 
+			minus == false && power > 0) ||
+			(parseInt($('#bee').css('left')) > 550 && parseInt($('#bee').css('left')) < 600 && 
+			$('#bee').css('bottom') == '110px' && parseInt($('#pooh').css('height')) > 80 && 
+			minus == false && power > 0)){
+			minus = true;
+			power -= 1;
+			$('#power').text(power);
+			$('#oh').css('display', 'block');
+		}
+		if (parseInt($('#bee').css('left')) > 400 && parseInt($('#bee').css('left')) < 420 
+			&& $('#oh').css('display') == 'block') {
+			$('#oh').css('display', 'none');
+		}
+		
+		if (power == 0) {
+			loose();
+		}
+		
+		if (bees == 0 && power > 0) {
+			win();
+		}
+		
+		requestAnimationFrame(loop);
+	}
+	requestAnimationFrame(loop);
+})
+
+</script>
+</head>
+<body>
+	<div id="tree"></div>
+	<div id="pooh"></div>
+	<div id="bee"></div>
+	<div id="honey-jar">
+		<div id="text">
+			<p>Power: <span id="power">3</span></p>
+			<p>Bees: <span id="bees">5</span></p>
+		</div>
+	</div>
+	<div id="oh"></div>
+	<div id="loose"></div>
+</body>
+</html>

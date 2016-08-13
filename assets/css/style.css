@@ -1,0 +1,87 @@
+@CHARSET "UTF-8";
+
+body {
+	background: url("../images/paisaje.jpg") no-repeat center center fixed;
+	background-size: 100% 100%;
+	font-family: 'Arial, Helevetica', sans-serif;
+	font-weight: bold;
+}
+
+#tree {
+	position: absolute;
+	background: url("../images/beehive-tree.png") no-repeat center center;
+	background-size: 100% 100%;
+	width: 400px;
+	height: 600px;
+	bottom: 20px;
+	right: 30px;
+}
+
+#pooh {
+	position: absolute;
+	background: url("../images/pooh1.png") no-repeat center center;
+	background-size: 100% 100%;
+	width: 150px;
+	height: 250px;
+	bottom: 20px;
+	left: 500px;
+}
+
+#bee {
+	position: absolute;
+	background: url("../images/bee.png") no-repeat center center;
+	background-size: 100% 100%;
+	width: 60px;
+	height: 40px;
+	bottom: 260px;
+	left: 1300px;
+}
+
+#honey-jar {
+	position: absolute;
+	background: url("../images/jar.png") no-repeat center center;
+	background-size: 100% 100%;
+	width: 200px;
+	height: 250px;
+}
+
+#text {
+	margin-top: 8.5em;
+	margin-left: 4em;
+}
+
+p {
+	font-weight: bold;
+	color: #A55924;
+	text-shadow: 1px 1px #000000;
+	padding: 0.2em;
+	font-style: italic;
+}
+
+span {
+	color: white;
+	margin-left: 0.2em;
+	font-style: normal;
+}
+
+#oh {
+	position: absolute;
+	background: url("../images/ouch.png") no-repeat center center;
+	background-size: 100% 100%;
+	width: 80px;
+	height: 70px;
+	bottom: 160px;
+	left: 600px;
+	display: none;
+}
+
+#loose {
+	position: absolute;
+	background: url("../images/no-honey.png") no-repeat center center;
+	background-size: 100% 100%;
+	width: 200px;
+	height: 100px;
+	top: 160px;
+	left: 500px;
+	display: none;
+}
